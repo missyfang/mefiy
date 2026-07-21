@@ -4,8 +4,6 @@ import java.awt.Desktop;
 import java.io.*;
 import java.net.*;
 import java.net.http.*;
-import java.nio.charset.StandardCharsets;
-import java.util.Base64;
 
 public class AuthTokenGenerator {
     private final String clientId;
@@ -41,15 +39,16 @@ public class AuthTokenGenerator {
             }
         }
 
-        // TODO can we use a lib or something to make this easier??
         // pass code to get token
-        HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create("https://accounts.spotify.com/api/token"))
-                .header("Authorization", "Basic " + Base64.getEncoder().encodeToString((clientId + ":" + clientSecret).getBytes(StandardCharsets.UTF_8)))
-                .header("Content-Type", "application/x-www-form-urlencoded")
-                .POST(HttpRequest.BodyPublishers.ofString("grant_type=authorization_code"
-                        + "&code=" + authCode
-                        + "&redirect_uri=" + URLEncoder.encode(redirectUri, StandardCharsets.UTF_8)))
+        HttpRequest request = new HttpRequestBuilderExtensions(
+                HttpRequest.newBuilder().uri(URI.create("https://accounts.spotify.com/api/token")))
+                .withAuthorizationHeader(clientId, clientSecret)
+                .withContentType("application/x-www-form-urlencoded")
+                .withPost(new TokenRequestBodyBuilder()
+                        .withGrantType("authorization_code")
+                        .withAuthCode(authCode)
+                        .withRedirectUri(redirectUri)
+                        .build())
                 .build();
 
         try {
