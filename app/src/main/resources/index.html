@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Token Generator</title>
+</head>
+<body>
+    <h2>Enter Client Secret</h2>
+    <input type="password" id="clientSecret" placeholder="Client Secret" /><br><br>
+    <button onclick="getToken()">Get Token</button>
+    <p id="status"></p>
+
+    <script>
+        async function getToken() {
+            const clientSecret = document.getElementById('clientSecret').value.trim();
+            const status = document.getElementById('status');
+
+            status.textContent = 'Waiting for Spotify login...';
+
+            const res = await fetch('/token', {
+                method: 'POST',
+                body: clientSecret
+            });
+
+            if (res.ok) {
+                window.location.href = '/home';
+            } else {
+                const data = await res.json();
+                status.textContent = data.message;
+            }
+        }
+    </script>
+</body>
+</html>

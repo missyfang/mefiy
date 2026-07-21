@@ -1,16 +1,21 @@
 package main;
 
-import java.util.Scanner;
+import com.sun.net.httpserver.HttpServer;
+
+import java.net.InetSocketAddress;
+import java.util.concurrent.Executors;
 
 public class main {
-    void main(String[] args) throws Exception {
+    public static void main(String[] args) throws Exception {
         AppConfig config = new AppConfig();
+        HttpServer server = HttpServer.create(new InetSocketAddress(8080), 0);
 
-        System.out.println("enter client secret: ");
-        Scanner scanner = new Scanner(System.in);
-        String clientSecret = scanner.next();
+        server.createContext("/", new IndexHandler());
+        server.createContext("/home", new HomeHandler());
+        server.createContext("/token", new FetchToken(config)::handle);
 
-        String token = new AuthTokenGenerator(config.getClientId(), clientSecret, config.getRedirectUri()).GetToken(3000);
-        System.out.println("got the token: " + token);
+        server.setExecutor(Executors.newCachedThreadPool());
+        server.start();
+        System.out.println("Running at http://localhost:8080");
     }
 }

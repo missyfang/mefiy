@@ -18,7 +18,7 @@ public class AuthTokenGenerator {
         this.redirectUri = redirectUri;
     }
 
-    public String GetToken(int port) throws Exception {
+    public TokenResult TryGetToken(int port) throws Exception {
         // open login on desktop
         URI authUri = new CodeURIBuilder()
                 .withBaseUrl("https://accounts.spotify.com/authorize")
@@ -52,10 +52,10 @@ public class AuthTokenGenerator {
                 .build();
 
         try {
-            HttpResponse<String> response = http.send(request, HttpResponse.BodyHandlers.ofString());
-            return response.body();
+            String body = http.send(request, HttpResponse.BodyHandlers.ofString()).body();
+            return new TokenResult(body.contains("access_token"), body);
         } catch (Exception e) {
-            return e.getMessage();
+            return new TokenResult(false, e.getMessage());
         }
     }
 }
