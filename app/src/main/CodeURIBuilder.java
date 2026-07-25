@@ -6,34 +6,34 @@ import java.nio.charset.StandardCharsets;
 
 
 // builder class to create the uri needed to grab a code to exchange for an auth token
-public class CodeURIBuilder {
+public class CodeURIBuilder implements ICodeURIBuilder {
     private String baseUrl;
     private String clientId;
     private String responseType;
     private String redirectUri;
     private String scope;
 
-    public CodeURIBuilder withBaseUrl(String baseUrl) {
+    public ICodeURIBuilder withBaseUrl(String baseUrl) {
         this.baseUrl = baseUrl;
         return this;
     }
 
-    public CodeURIBuilder withClientId(String clientId) {
+    public ICodeURIBuilder withClientId(String clientId) {
         this.clientId = clientId;
         return this;
     }
 
-    public CodeURIBuilder withResponseType(String responseType) {
+    public ICodeURIBuilder withResponseType(String responseType) {
         this.responseType = responseType;
         return this;
     }
 
-    public CodeURIBuilder withRedirectUri(String redirectUri) {
+    public ICodeURIBuilder withRedirectUri(String redirectUri) {
         this.redirectUri = redirectUri;
         return this;
     }
 
-    public CodeURIBuilder withScope(String scope) {
+    public ICodeURIBuilder withScope(String scope) {
         this.scope = scope;
         return this;
     }

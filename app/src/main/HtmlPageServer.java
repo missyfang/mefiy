@@ -20,11 +20,15 @@ public abstract class HtmlPageServer implements HttpHandler {
 }
 
 class IndexPageServer extends HtmlPageServer {
+    private final String filename = "index.html";
+
     @Override
-    protected String getFilename() { return "index.html"; }
+    protected String getFilename() { return filename; }
 }
 
 class HomePageServer extends HtmlPageServer {
+    private final String filename = "home.html";
+
     @Override
-    protected String getFilename() { return "home.html"; }
+    protected String getFilename() { return filename; }
 }
