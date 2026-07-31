@@ -19,6 +19,11 @@ public class HttpRequestBuilderExtensions {
         return this;
     }
 
+    public HttpRequestBuilderExtensions withBearerToken(String token) {
+        builder.header("Authorization", "Bearer " + token);
+        return this;
+    }
+
     public HttpRequestBuilderExtensions withContentType(String contentType) {
         builder.header("Content-Type", contentType);
         return this;
