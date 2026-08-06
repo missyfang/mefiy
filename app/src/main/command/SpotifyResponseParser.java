@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-/// class to pull the data need out of the json response using regex pattern matching
+/// class to pull the data need out of the json response using regex to figure out what we need
 public class SpotifyResponseParser {
 
     public static String parseFirst(String body, Pattern pattern) {

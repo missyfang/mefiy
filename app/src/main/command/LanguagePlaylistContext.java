@@ -8,8 +8,9 @@ public class LanguagePlaylistContext implements ICommandContext {
     public String accessToken;
     public String userId;
     public String targetLanguage;
-    public String targetMood;
+    public Mood targetMood;
     public List<String> likedTrackIds = new ArrayList<>();
+    public List<Song> songs = new ArrayList<>();
     public List<String> filteredTrackIds = new ArrayList<>();
     public String playlistId;
 }
