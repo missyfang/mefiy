@@ -8,17 +8,13 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class FilterSongsByLanguageCommandTest {
 
-    private static ILanguageDetector stub(String language) {
-        return text -> language;
-    }
-
     @Test
     void execute_keepsTracksMatchingTargetLanguage() {
         LanguagePlaylistContext ctx = new LanguagePlaylistContext();
         ctx.targetLanguage = "en";
         ctx.moodFilteredSongs = List.of(new Song("track1", 0.7, 0.8, "some english lyrics here"));
 
-        new FilterSongsByLanguageCommand(stub("en")).execute(ctx);
+        new FilterSongsByLanguageCommand(new StubLanguageDetector("en")).execute(ctx);
 
         assertEquals(1, ctx.languageFilteredSongs.size());
         assertEquals("track1", ctx.languageFilteredSongs.get(0).id);
@@ -30,7 +26,7 @@ public class FilterSongsByLanguageCommandTest {
         ctx.targetLanguage = "en";
         ctx.moodFilteredSongs = List.of(new Song("track1", 0.5, 0.3, "letras en español aquí"));
 
-        new FilterSongsByLanguageCommand(stub("es")).execute(ctx);
+        new FilterSongsByLanguageCommand(new StubLanguageDetector("es")).execute(ctx);
 
         assertTrue(ctx.languageFilteredSongs.isEmpty());
     }
@@ -41,7 +37,7 @@ public class FilterSongsByLanguageCommandTest {
         ctx.targetLanguage = "en";
         ctx.moodFilteredSongs = List.of(new Song("track1", 0.7, 0.8)); // no lyrics
 
-        new FilterSongsByLanguageCommand(stub("en")).execute(ctx);
+        new FilterSongsByLanguageCommand(new StubLanguageDetector("en")).execute(ctx);
 
         assertTrue(ctx.languageFilteredSongs.isEmpty());
     }
@@ -68,7 +64,7 @@ public class FilterSongsByLanguageCommandTest {
         ctx.targetLanguage = "EN";
         ctx.moodFilteredSongs = List.of(new Song("track1", 0.7, 0.8, "some english lyrics"));
 
-        new FilterSongsByLanguageCommand(stub("en")).execute(ctx);
+        new FilterSongsByLanguageCommand(new StubLanguageDetector("en")).execute(ctx);
 
         assertEquals(1, ctx.languageFilteredSongs.size());
         assertEquals("track1", ctx.languageFilteredSongs.get(0).id);
@@ -80,6 +76,6 @@ public class FilterSongsByLanguageCommandTest {
         ctx.targetLanguage = "en";
         ctx.moodFilteredSongs = List.of();
 
-        assertTrue(new FilterSongsByLanguageCommand(stub("en")).execute(ctx));
+        assertTrue(new FilterSongsByLanguageCommand(new StubLanguageDetector("en")).execute(ctx));
     }
 }
