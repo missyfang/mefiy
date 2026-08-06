@@ -19,7 +19,8 @@ public class FilterSongsByMoodCommandTest {
 
         new FilterSongsByMoodCommand().execute(ctx);
 
-        assertEquals(List.of("track1"), ctx.filteredTrackIds);
+        assertEquals(1, ctx.moodFilteredSongs.size());
+        assertEquals("track1", ctx.moodFilteredSongs.get(0).id);
     }
 
     @Test
@@ -33,7 +34,8 @@ public class FilterSongsByMoodCommandTest {
 
         new FilterSongsByMoodCommand().execute(ctx);
 
-        assertEquals(List.of("track1"), ctx.filteredTrackIds);
+        assertEquals(1, ctx.moodFilteredSongs.size());
+        assertEquals("track1", ctx.moodFilteredSongs.get(0).id);
     }
 
     @Test
@@ -47,7 +49,8 @@ public class FilterSongsByMoodCommandTest {
 
         new FilterSongsByMoodCommand().execute(ctx);
 
-        assertEquals(List.of("track1"), ctx.filteredTrackIds);
+        assertEquals(1, ctx.moodFilteredSongs.size());
+        assertEquals("track1", ctx.moodFilteredSongs.get(0).id);
     }
 
     @Test
@@ -61,7 +64,8 @@ public class FilterSongsByMoodCommandTest {
 
         new FilterSongsByMoodCommand().execute(ctx);
 
-        assertEquals(List.of("track1"), ctx.filteredTrackIds);
+        assertEquals(1, ctx.moodFilteredSongs.size());
+        assertEquals("track1", ctx.moodFilteredSongs.get(0).id);
     }
 
     @Test

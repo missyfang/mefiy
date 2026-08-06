@@ -3,19 +3,19 @@ package main.command;
 import java.util.ArrayList;
 import java.util.List;
 
-// filters ctx.songs by mood and writes matching track ids to ctx.filteredTrackIds
+// filters by mood
 public class FilterSongsByMoodCommand implements ICommand {
 
     @Override
     public boolean execute(ICommandContext context) {
         LanguagePlaylistContext ctx = (LanguagePlaylistContext) context;
-        List<String> filtered = new ArrayList<>();
+        List<Song> filtered = new ArrayList<>();
         for (Song song : ctx.songs) {
             if (matchesMood(ctx.targetMood, song.valence, song.energy)) {
-                filtered.add(song.id);
+                filtered.add(song);
             }
         }
-        ctx.filteredTrackIds = filtered;
+        ctx.moodFilteredSongs = filtered;
         return true;
     }
 
