@@ -14,7 +14,7 @@ public class FilterSongsByLanguageCommandTest {
         ctx.targetLanguage = "en";
         ctx.moodFilteredSongs = List.of(new Song("track1", 0.7, 0.8, "some english lyrics here"));
 
-        new FilterSongsByLanguageCommand(new StubLanguageDetector("en")).execute(ctx);
+        new FilterSongsByLanguageCommand(new FakeLanguageDetector("en")).execute(ctx);
 
         assertEquals(1, ctx.languageFilteredSongs.size());
         assertEquals("track1", ctx.languageFilteredSongs.get(0).id);
@@ -26,7 +26,7 @@ public class FilterSongsByLanguageCommandTest {
         ctx.targetLanguage = "en";
         ctx.moodFilteredSongs = List.of(new Song("track1", 0.5, 0.3, "letras en español aquí"));
 
-        new FilterSongsByLanguageCommand(new StubLanguageDetector("es")).execute(ctx);
+        new FilterSongsByLanguageCommand(new FakeLanguageDetector("es")).execute(ctx);
 
         assertTrue(ctx.languageFilteredSongs.isEmpty());
     }
@@ -37,7 +37,7 @@ public class FilterSongsByLanguageCommandTest {
         ctx.targetLanguage = "en";
         ctx.moodFilteredSongs = List.of(new Song("track1", 0.7, 0.8)); // no lyrics
 
-        new FilterSongsByLanguageCommand(new StubLanguageDetector("en")).execute(ctx);
+        new FilterSongsByLanguageCommand(new FakeLanguageDetector("en")).execute(ctx);
 
         assertTrue(ctx.languageFilteredSongs.isEmpty());
     }
@@ -64,7 +64,7 @@ public class FilterSongsByLanguageCommandTest {
         ctx.targetLanguage = "EN";
         ctx.moodFilteredSongs = List.of(new Song("track1", 0.7, 0.8, "some english lyrics"));
 
-        new FilterSongsByLanguageCommand(new StubLanguageDetector("en")).execute(ctx);
+        new FilterSongsByLanguageCommand(new FakeLanguageDetector("en")).execute(ctx);
 
         assertEquals(1, ctx.languageFilteredSongs.size());
         assertEquals("track1", ctx.languageFilteredSongs.get(0).id);
@@ -76,6 +76,6 @@ public class FilterSongsByLanguageCommandTest {
         ctx.targetLanguage = "en";
         ctx.moodFilteredSongs = List.of();
 
-        assertTrue(new FilterSongsByLanguageCommand(new StubLanguageDetector("en")).execute(ctx));
+        assertTrue(new FilterSongsByLanguageCommand(new FakeLanguageDetector("en")).execute(ctx));
     }
 }

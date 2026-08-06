@@ -1,3 +1,6 @@
+I can do what spotify cant 
+
+
 – Are you in a Group?
   no
 
@@ -36,6 +39,28 @@ I saw building the HTTP request to a auth code and token to be an obvious use ca
 Im not struggling to use design patterns, but i am struggling to justify them some times since the project is so small. 
 ## New Feature Ideas
 I want to add a new feature "language playlist builder". I like a lot of songs in different language and wish i could filter on that language to create playlist. spotify does not let you do this but i think i can use the api to build it myself!
-UML diagrams
-- https://www.figma.com/board/vxkZZkvwJ7LMByFql9GWFe/Builder-pattern-uml?node-id=0-1&t=bHezfbGcRtKGMkHk-1
+
+### SPRINT 4
+## Using the command pattern as core pattern
+The command patterns is one of my favs i think its so useful. I chose to use it because i saw potential for a command like "GetSongAttributes" to be used for a bunch of different features. Ill next implement a invoker to trigger the commands in a specific order to accomplish the goal of a feature.
+
+## Using strategy pattern for test fakes
+I used the strategy pattern to use a test version
+of the algorithm for detecting a language from lyrics. This depends on a third party library but i don't not want my test to be dependent on that library. If the library change or broke my test would break even if the code was still good.
+
+## Struggles
+I don't know how I'm  going to get lyrics of a song without paying for them. im going to try last.fm first but i might have to switch gears by determining language by title, artist name, and market. this is way more complicated and less accurate tho.
+
+## New Feature Ideas
+My main goal is the language playlist builder. I get a mood playlist builder out of it for free as well. I think i could expand this to make the possible moods more varied and complex.
+
+
+## Third party 
+- Spotify
+
+- Lingua (`com.github.pemistahl:lingua:1.2.2`) : to detect the language
+
+- Kotlin : needed by Lingua 
+
+- Last.fm : used to fetch lyrics maybe...
 

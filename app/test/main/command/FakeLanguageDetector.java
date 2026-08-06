@@ -1,11 +1,11 @@
 package main.command;
 
-// test stub — returns a fixed language code for every input
-public class StubLanguageDetector implements ILanguageDetector {
+// test fake — returns a fixed language code for every input
+public class FakeLanguageDetector implements ILanguageDetector {
 
     private final String language;
 
-    public StubLanguageDetector(String language) {
+    public FakeLanguageDetector(String language) {
         this.language = language;
     }
 
