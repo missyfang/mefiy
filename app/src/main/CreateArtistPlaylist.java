@@ -1,8 +1,8 @@
 package main;
 
 import com.sun.net.httpserver.HttpExchange;
+import main.command.WorkflowFactory;
 import main.command.artistPlaylist.ArtistPlaylistContext;
-import main.command.artistPlaylist.ArtistPlaylistWorkflow;
 import main.models.Song;
 
 import java.io.IOException;
@@ -49,7 +49,7 @@ public class CreateArtistPlaylist {
             ctx.playlistName = playlistName;
         }
 
-        boolean success = new ArtistPlaylistWorkflow().run(ctx);
+        boolean success = new WorkflowFactory().create("artist-playlist").run(ctx);
         if (success) {
             sendResponse(exchange, 200, toJson(ctx));
         } else {

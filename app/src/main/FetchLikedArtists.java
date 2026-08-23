@@ -2,8 +2,8 @@ package main;
 
 import com.sun.net.httpserver.HttpExchange;
 import main.models.Artist;
+import main.command.WorkflowFactory;
 import main.command.GetLikeArtistInfo.LikedArtistInfoContext;
-import main.command.GetLikeArtistInfo.LikedArtistInfoWorkflow;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -25,7 +25,7 @@ public class FetchLikedArtists {
         int status;
         String response;
 
-        boolean success = new LikedArtistInfoWorkflow().run(ctx);
+        boolean success = new WorkflowFactory().create("liked-artist-info").run(ctx);
         if (success) {
             status = 200;
             response = toJson(ctx);

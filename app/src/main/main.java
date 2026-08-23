@@ -22,7 +22,7 @@ public class main {
         server.createContext("/language-playlist", new LanguagePlaylistPageServer());
 
         // configure EPs
-        ISpotifyApiClient apiClient = new SpotifyApiClientFactory().create();
+        ISpotifyApiClient apiClient = new CachingSpotifyApiProxy(new SpotifyApiClient());
         server.createContext("/token", new FetchToken(config)::handle);
         server.createContext("/api/liked-artists", new FetchLikedArtists(apiClient)::handle);
         server.createContext("/api/artist-playlist", new CreateArtistPlaylist(apiClient)::handle);

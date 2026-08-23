@@ -55,7 +55,18 @@ I don't know how I'm  going to get lyrics of a song without paying for them. im 
 My main goal is the language playlist builder. I get a mood playlist builder out of it for free as well. I think i could expand this to make the possible moods more varied and complex.
 
 
-## Third party 
+#### Final Sprint
+
+## Using the proxy pattern for caching API calls
+We added caching to reduce Spotify API quota usage. 
+
+## Using the factory pattern to create a feature workflow
+Handler methods are no longer coupled to a specific workflow implementation and just need the factory and interface.
+
+## Struggles
+The gratest struggle this sprint was the spotify quota that they introduced. I had not hit the limit in a single session before so i was unaware it existed. it is the perfect oppotunity to use the proxy pattern tho since a cache will reduce unnecessary calls. 
+
+## Third party
 - Spotify
 
 - Lingua (`com.github.pemistahl:lingua:1.2.2`) : to detect the language
