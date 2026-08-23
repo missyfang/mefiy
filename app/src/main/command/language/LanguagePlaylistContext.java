@@ -1,5 +1,6 @@
 package main.command.language;
 
+import main.ISpotifyApiClient;
 import main.command.commandContext.ISpotifyContext;
 import main.models.Song;
 
@@ -11,13 +12,19 @@ public class LanguagePlaylistContext implements ISpotifyContext, ILanguageFilter
 
     public String accessToken;
     public String userId;
+    private final ISpotifyApiClient apiClient;
     public String targetLanguage;
+
+    public LanguagePlaylistContext(ISpotifyApiClient apiClient) {
+        this.apiClient = apiClient;
+    }
     public List<String> likedTrackIds = new ArrayList<>();
     public List<Song> songs = new ArrayList<>();
     public List<Song> languageFilteredSongs = new ArrayList<>();
     public String playlistId;
 
     @Override public String getAccessToken() { return accessToken; }
+    @Override public ISpotifyApiClient getApiClient() { return apiClient; }
     @Override public String getUserId() { return userId; }
     @Override public void setUserId(String userId) { this.userId = userId; }
     @Override public List<String> getLikedTrackIds() { return likedTrackIds; }

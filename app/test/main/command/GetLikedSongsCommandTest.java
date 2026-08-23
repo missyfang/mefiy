@@ -1,5 +1,6 @@
 package main.command;
 
+import main.ISpotifyApiClient;
 import main.command.language.LanguagePlaylistContext;
 import main.command.sharedCommands.GetLikedSongsCommand;
 import main.models.Song;
@@ -11,6 +12,11 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class GetLikedSongsCommandTest {
+
+    private static final ISpotifyApiClient FAILING_CLIENT = new ISpotifyApiClient() {
+        public String get(String url, String token) throws Exception { throw new Exception("HTTP 401"); }
+        public String post(String url, String jsonBody, String token) throws Exception { throw new Exception("HTTP 401"); }
+    };
 
     @Test
     void handleResponse_addsTrackIdsAndSongsWithArtistNames() {
@@ -54,7 +60,7 @@ public class GetLikedSongsCommandTest {
 
     @Test
     void execute_returnsFalseWhenTokenIsInvalid() {
-        LanguagePlaylistContext ctx = new LanguagePlaylistContext();
+        LanguagePlaylistContext ctx = new LanguagePlaylistContext(FAILING_CLIENT);
         ctx.accessToken = "invalid_token";
 
         assertFalse(new GetLikedSongsCommand().execute(ctx));

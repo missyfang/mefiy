@@ -10,10 +10,16 @@ import java.nio.charset.StandardCharsets;
 
 public class FetchLikedArtists {
 
+    private final ISpotifyApiClient apiClient;
+
+    public FetchLikedArtists(ISpotifyApiClient apiClient) {
+        this.apiClient = apiClient;
+    }
+
     public void handle(HttpExchange exchange) throws IOException {
         String token = new String(exchange.getRequestBody().readAllBytes(), StandardCharsets.UTF_8);
 
-        LikedArtistInfoContext ctx = new LikedArtistInfoContext();
+        LikedArtistInfoContext ctx = new LikedArtistInfoContext(apiClient);
         ctx.accessToken = token;
 
         int status;

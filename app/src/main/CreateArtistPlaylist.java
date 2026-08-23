@@ -12,11 +12,17 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class FetchArtistPlaylist {
+public class CreateArtistPlaylist {
 
     private static final Pattern TOKEN_PATTERN = Pattern.compile("\"token\":\"([^\"]+)\"");
     private static final Pattern ARTIST_IDS_PATTERN = Pattern.compile("\"artistIds\":\"([^\"]+)\"");
     private static final Pattern PLAYLIST_NAME_PATTERN = Pattern.compile("\"playlistName\":\"([^\"]+)\"");
+
+    private final ISpotifyApiClient apiClient;
+
+    public CreateArtistPlaylist(ISpotifyApiClient apiClient) {
+        this.apiClient = apiClient;
+    }
 
     public void handle(HttpExchange exchange) throws IOException {
         String body = new String(exchange.getRequestBody().readAllBytes(), StandardCharsets.UTF_8);
@@ -36,7 +42,7 @@ public class FetchArtistPlaylist {
 
         String playlistName = parseField(body, PLAYLIST_NAME_PATTERN);
 
-        ArtistPlaylistContext ctx = new ArtistPlaylistContext();
+        ArtistPlaylistContext ctx = new ArtistPlaylistContext(apiClient);
         ctx.accessToken = token;
         ctx.targetArtistIds.addAll(artistIds);
         if (playlistName != null && !playlistName.isEmpty()) {

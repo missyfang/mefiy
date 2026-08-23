@@ -1,5 +1,6 @@
 package main.command.commandContext;
 
+import main.ISpotifyApiClient;
 import main.models.Song;
 
 import java.util.List;
@@ -7,6 +8,7 @@ import java.util.List;
 // role interface for commands that call the Spotify API and work with track data
 public interface ISpotifyContext extends ICommandContext {
     String getAccessToken();
+    ISpotifyApiClient getApiClient();
     String getUserId();
     void setUserId(String userId);
     List<String> getLikedTrackIds();

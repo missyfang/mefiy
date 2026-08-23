@@ -6,11 +6,12 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 
 // wrapper for all the calls to spotify api
-public class SpotifyApiClient {
+public class SpotifyApiClient implements ISpotifyApiClient {
 
-    private static final HttpClient http = HttpClient.newHttpClient();
+    private final HttpClient http = HttpClient.newHttpClient();
 
-    public static String get(String url, String token) throws Exception {
+    @Override
+    public String get(String url, String token) throws Exception {
         HttpRequest request = new HttpRequestBuilderExtensions(
                 HttpRequest.newBuilder().uri(URI.create(url)))
                 .withBearerToken(token)
@@ -20,16 +21,29 @@ public class SpotifyApiClient {
         return response.body();
     }
 
-    public static String post(String url, String jsonBody, String token) throws Exception {
+    @Override
+    public String post(String url, String jsonBody, String token) throws Exception {
         HttpRequest request = new HttpRequestBuilderExtensions(
                 HttpRequest.newBuilder().uri(URI.create(url)))
                 .withBearerToken(token)
                 .withContentType("application/json")
                 .withPost(HttpRequest.BodyPublishers.ofString(jsonBody))
                 .build();
-        HttpResponse<String> response = http.send(request, HttpResponse.BodyHandlers.ofString());
+        HttpResponse<String> response = sendWithRetry(request);
         if (response.statusCode() != 200 && response.statusCode() != 201)
             throw new Exception("HTTP " + response.statusCode());
         return response.body();
+    }
+
+    private HttpResponse<String> sendWithRetry(HttpRequest request) throws Exception {
+        int maxRetries = 3;
+        for (int i = 0; i < maxRetries; i++) {
+            HttpResponse<String> response = http.send(request, HttpResponse.BodyHandlers.ofString());
+            if (response.statusCode() != 429) return response;
+            String retryAfter = response.headers().firstValue("Retry-After").orElse("1");
+            long waitSeconds = Long.parseLong(retryAfter);
+            Thread.sleep(waitSeconds * 1000);
+        }
+        return http.send(request, HttpResponse.BodyHandlers.ofString());
     }
 }

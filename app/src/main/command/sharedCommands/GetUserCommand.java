@@ -2,7 +2,6 @@ package main.command.sharedCommands;
 
 import main.command.ICommand;
 import main.command.commandContext.ISpotifyContext;
-import main.SpotifyApiClient;
 import main.SpotifyResponseParser;
 import main.command.commandContext.ICommandContext;
 
@@ -17,7 +16,7 @@ public class GetUserCommand implements ICommand {
     public boolean execute(ICommandContext context) {
         ISpotifyContext ctx = (ISpotifyContext) context;
         try {
-            return handleResponse(SpotifyApiClient.get(URL, ctx.getAccessToken()), ctx);
+            return handleResponse(ctx.getApiClient().get(URL, ctx.getAccessToken()), ctx);
         } catch (Exception e) {
             e.printStackTrace();
             return false;

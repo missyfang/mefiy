@@ -4,11 +4,10 @@ import main.command.ICommand;
 import main.command.commandContext.ICommandContext;
 import main.command.commandContext.IPlaylistBuildableContext;
 import main.models.Song;
-import main.SpotifyApiClient;
 
 import java.util.List;
 
-// adds songs to a playlist via POST /v1/playlists/{playlist_id}/tracks — max 100 per request
+// adds songs to a playlist
 public class AddSongsToPlaylistCommand implements ICommand {
 
     private static final String URL_PREFIX = "https://api.spotify.com/v1/playlists/";
@@ -30,7 +29,7 @@ public class AddSongsToPlaylistCommand implements ICommand {
                     sb.append("\"spotify:track:").append(batch.get(j).id).append("\"");
                 }
                 sb.append("]}");
-                SpotifyApiClient.post(url, sb.toString(), ctx.getAccessToken());
+                ctx.getApiClient().post(url, sb.toString(), ctx.getAccessToken());
             }
             return true;
         } catch (Exception e) {

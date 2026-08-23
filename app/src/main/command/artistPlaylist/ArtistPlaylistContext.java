@@ -1,5 +1,6 @@
 package main.command.artistPlaylist;
 
+import main.ISpotifyApiClient;
 import main.command.commandContext.IPlaylistBuildableContext;
 import main.command.commandContext.ISpotifyContext;
 import main.models.Song;
@@ -7,12 +8,17 @@ import main.models.Song;
 import java.util.ArrayList;
 import java.util.List;
 
-// context for building a playlist from liked songs filtered by a list of target artist IDs
+// context for building a playlist from liked songs filtered by a list of artist
 public class ArtistPlaylistContext implements ISpotifyContext, IArtistFilterableContext, IPlaylistBuildableContext {
 
     public String accessToken;
     public String userId;
+    private final ISpotifyApiClient apiClient;
     public String playlistName = "Artist Playlist";
+
+    public ArtistPlaylistContext(ISpotifyApiClient apiClient) {
+        this.apiClient = apiClient;
+    }
     public List<String> targetArtistIds = new ArrayList<>();
     public List<String> likedTrackIds = new ArrayList<>();
     public List<Song> songs = new ArrayList<>();
@@ -20,6 +26,7 @@ public class ArtistPlaylistContext implements ISpotifyContext, IArtistFilterable
     public String playlistId;
 
     @Override public String getAccessToken() { return accessToken; }
+    @Override public ISpotifyApiClient getApiClient() { return apiClient; }
     @Override public String getUserId() { return userId; }
     @Override public void setUserId(String userId) { this.userId = userId; }
     @Override public List<String> getLikedTrackIds() { return likedTrackIds; }

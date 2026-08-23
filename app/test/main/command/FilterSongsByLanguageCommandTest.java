@@ -14,7 +14,7 @@ public class FilterSongsByLanguageCommandTest {
 
     @Test
     void execute_keepsTracksMatchingTargetLanguage() {
-        LanguagePlaylistContext ctx = new LanguagePlaylistContext();
+        LanguagePlaylistContext ctx = new LanguagePlaylistContext(null);
         ctx.targetLanguage = "en";
         ctx.songs = List.of(new Song("track1", "some english lyrics here", List.of()));
 
@@ -26,7 +26,7 @@ public class FilterSongsByLanguageCommandTest {
 
     @Test
     void execute_removesTracksNotMatchingTargetLanguage() {
-        LanguagePlaylistContext ctx = new LanguagePlaylistContext();
+        LanguagePlaylistContext ctx = new LanguagePlaylistContext(null);
         ctx.targetLanguage = "en";
         ctx.songs = List.of(new Song("track1", "letras en español aquí", List.of()));
 
@@ -37,7 +37,7 @@ public class FilterSongsByLanguageCommandTest {
 
     @Test
     void execute_skipsTracksWithNullLyrics() {
-        LanguagePlaylistContext ctx = new LanguagePlaylistContext();
+        LanguagePlaylistContext ctx = new LanguagePlaylistContext(null);
         ctx.targetLanguage = "en";
         ctx.songs = List.of(new Song("track1")); // no lyrics
 
@@ -48,7 +48,7 @@ public class FilterSongsByLanguageCommandTest {
 
     @Test
     void execute_filtersCorrectlyAcrossMixedLanguages() {
-        LanguagePlaylistContext ctx = new LanguagePlaylistContext();
+        LanguagePlaylistContext ctx = new LanguagePlaylistContext(null);
         ctx.targetLanguage = "en";
         ctx.songs = List.of(
                 new Song("track1", "english lyrics", List.of()),
@@ -64,7 +64,7 @@ public class FilterSongsByLanguageCommandTest {
 
     @Test
     void execute_isCaseInsensitiveForLanguageCode() {
-        LanguagePlaylistContext ctx = new LanguagePlaylistContext();
+        LanguagePlaylistContext ctx = new LanguagePlaylistContext(null);
         ctx.targetLanguage = "EN";
         ctx.songs = List.of(new Song("track1", "some english lyrics", List.of()));
 
@@ -76,7 +76,7 @@ public class FilterSongsByLanguageCommandTest {
 
     @Test
     void execute_alwaysReturnsTrue() {
-        LanguagePlaylistContext ctx = new LanguagePlaylistContext();
+        LanguagePlaylistContext ctx = new LanguagePlaylistContext(null);
         ctx.targetLanguage = "en";
         ctx.songs = List.of();
 

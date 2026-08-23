@@ -3,7 +3,6 @@ package main.command.sharedCommands;
 import main.command.ICommand;
 import main.models.Song;
 import main.command.commandContext.ISpotifyContext;
-import main.SpotifyApiClient;
 import main.SpotifyResponseParser;
 import main.command.commandContext.ICommandContext;
 
@@ -33,9 +32,8 @@ public class GetLikedSongsCommand implements ICommand {
 
         try {
             while (hasMore) {
-                String body = SpotifyApiClient.get(BASE_URL + offset, ctx.getAccessToken());
+                String body = ctx.getApiClient().get(BASE_URL + offset, ctx.getAccessToken());
                 hasMore = handleResponse(body, trackIds, songs);
-                // this is gonna take forever to get all liked songs, we should cache this for all features.
                 offset += 50;
             }
             ctx.setLikedTrackIds(trackIds);

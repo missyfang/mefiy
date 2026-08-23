@@ -3,12 +3,11 @@ package main.command.sharedCommands;
 import main.command.ICommand;
 import main.command.commandContext.ICommandContext;
 import main.command.commandContext.IPlaylistBuildableContext;
-import main.SpotifyApiClient;
 import main.SpotifyResponseParser;
 
 import java.util.regex.Pattern;
 
-// creates an empty playlist for the user via POST /v1/users/{user_id}/playlists
+// creates an empty playlist
 public class CreatePlaylistCommand implements ICommand {
 
     private static final String URL_PREFIX = "https://api.spotify.com/v1/users/";
@@ -21,7 +20,7 @@ public class CreatePlaylistCommand implements ICommand {
         try {
             String url = URL_PREFIX + ctx.getUserId() + URL_SUFFIX;
             String body = "{\"name\":\"" + escapeJson(ctx.getPlaylistName()) + "\",\"public\":false}";
-            String response = SpotifyApiClient.post(url, body, ctx.getAccessToken());
+            String response = ctx.getApiClient().post(url, body, ctx.getAccessToken());
             return handleResponse(response, ctx);
         } catch (Exception e) {
             e.printStackTrace();
