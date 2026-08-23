@@ -19,6 +19,7 @@ public class GetUserCommand implements ICommand {
         try {
             return handleResponse(SpotifyApiClient.get(URL, ctx.getAccessToken()), ctx);
         } catch (Exception e) {
+            e.printStackTrace();
             return false;
         }
     }

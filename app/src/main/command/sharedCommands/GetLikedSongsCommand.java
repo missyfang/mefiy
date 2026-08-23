@@ -34,6 +34,7 @@ public class GetLikedSongsCommand implements ICommand {
             ctx.setLikedTrackIds(trackIds);
             return true;
         } catch (Exception e) {
+            e.printStackTrace();
             return false;
         }
     }

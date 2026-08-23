@@ -38,6 +38,7 @@ public class GetSongAttributesCommand implements ICommand {
             ctx.setSongs(songs);
             return true;
         } catch (Exception e) {
+            e.printStackTrace();
             return false;
         }
     }
