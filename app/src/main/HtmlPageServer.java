@@ -32,3 +32,31 @@ class HomePageServer extends HtmlPageServer {
     @Override
     protected String getFilename() { return filename; }
 }
+
+class FeaturePageServer extends HtmlPageServer {
+    private final String filename = "feature.html";
+
+    @Override
+    protected String getFilename() { return filename; }
+}
+
+class LikedArtistsPageServer extends HtmlPageServer {
+    private final String filename = "liked-artists.html";
+
+    @Override
+    protected String getFilename() { return filename; }
+}
+
+class ArtistMoodPageServer extends HtmlPageServer {
+    private final String filename = "artist-mood.html";
+
+    @Override
+    protected String getFilename() { return filename; }
+}
+
+class LanguagePlaylistPageServer extends HtmlPageServer {
+    private final String filename = "language-playlist.html";
+
+    @Override
+    protected String getFilename() { return filename; }
+}

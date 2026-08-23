@@ -25,7 +25,7 @@ public class AuthTokenGenerator {
                 .withClientId(clientId)
                 .withResponseType("code")
                 .withRedirectUri(redirectUri)
-                .withScope("user-read-private")
+                .withScope("user-read-private user-library-read")
                 .build();
         Desktop.getDesktop().browse(authUri);
 

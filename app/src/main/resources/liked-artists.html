@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Liked Song Artists</title>
+    <style>
+        body { font-family: sans-serif; max-width: 800px; margin: 40px auto; padding: 0 20px; }
+        a { color: #555; text-decoration: none; }
+        a:hover { text-decoration: underline; }
+        #status { margin: 16px 0; color: #555; }
+        table { width: 100%; border-collapse: collapse; margin-top: 16px; }
+        th, td { text-align: left; padding: 8px 12px; border-bottom: 1px solid #eee; }
+        th { background: #f9f9f9; font-weight: 600; }
+        button { padding: 10px 20px; cursor: pointer; font-size: 14px; }
+    </style>
+</head>
+<body>
+    <a href="/feature">&larr; Back to Features</a>
+    <h2>Liked Song Artists</h2>
+    <button onclick="fetchLikedArtists()">Fetch Artists</button>
+    <p id="status"></p>
+    <div id="results"></div>
+
+    <script>
+        function getToken() {
+            const token = localStorage.getItem('access_token');
+            if (!token) {
+                alert('No token found. Please log in first.');
+                window.location.href = '/';
+            }
+            return token;
+        }
+
+        async function fetchLikedArtists() {
+            const token = getToken();
+            const status = document.getElementById('status');
+            const results = document.getElementById('results');
+
+            status.textContent = 'Fetching liked song artists...';
+            results.innerHTML = '';
+
+            const res = await fetch('/api/liked-artists', {
+                method: 'POST',
+                body: token
+            });
+
+            const data = await res.json();
+            if (!data.success) {
+                status.textContent = 'Failed to fetch artists.';
+                return;
+            }
+
+            status.textContent = 'Found ' + data.artists.length + ' artists.';
+
+            let html = '<table><tr><th>Name</th><th>ID</th><th>Genres</th><th>Popularity</th></tr>';
+            for (const a of data.artists) {
+                html += '<tr>';
+                html += '<td>' + escapeHtml(a.name) + '</td>';
+                html += '<td>' + escapeHtml(a.id) + '</td>';
+                html += '<td>' + escapeHtml(a.genres.join(', ')) + '</td>';
+                html += '<td>' + a.popularity + '</td>';
+                html += '</tr>';
+            }
+            html += '</table>';
+            results.innerHTML = html;
+        }
+
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+    </script>
+</body>
+</html>

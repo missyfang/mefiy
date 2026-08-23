@@ -23,7 +23,12 @@ public class FetchToken {
                     .TryGetToken(3000);
             if (result.success()) {
                 status = 200;
-                response = "{\"success\":true,\"message\":\"Token retrieved!\",\"token\":\"" + result.token() + "\"}";
+                String escapedToken = result.token()
+                        .replace("\\", "\\\\")
+                        .replace("\"", "\\\"")
+                        .replace("\n", "\\n")
+                        .replace("\r", "\\r");
+                response = "{\"success\":true,\"message\":\"Token retrieved!\",\"token\":\"" + escapedToken + "\"}";
             } else {
                 status = 500;
                 response = "{\"success\":false,\"message\":\"Token not retrieved!\"}";

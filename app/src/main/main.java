@@ -16,9 +16,14 @@ public class main {
         // handle html page serving
         server.createContext("/", new IndexPageServer());
         server.createContext("/home", new HomePageServer());
+        server.createContext("/feature", new FeaturePageServer());
+        server.createContext("/liked-artists", new LikedArtistsPageServer());
+        server.createContext("/artist-mood", new ArtistMoodPageServer());
+        server.createContext("/language-playlist", new LanguagePlaylistPageServer());
 
         // configure EPs
         server.createContext("/token", new FetchToken(config)::handle);
+        server.createContext("/api/liked-artists", new FetchLikedArtists()::handle);
 
         server.setExecutor(Executors.newCachedThreadPool());
 

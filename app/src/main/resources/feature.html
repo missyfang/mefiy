@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Features</title>
+    <style>
+        body { font-family: sans-serif; max-width: 800px; margin: 40px auto; padding: 0 20px; }
+        h2 { margin-bottom: 24px; }
+        .feature-card {
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 16px;
+            cursor: pointer;
+        }
+        .feature-card:hover { background: #f5f5f5; }
+        .feature-card h3 { margin: 0 0 8px; }
+        .feature-card p { margin: 0; color: #555; }
+    </style>
+</head>
+<body>
+    <h2>Choose a Feature</h2>
+
+    <div class="feature-card" onclick="window.location.href='/liked-artists'">
+        <h3>Get Liked Song Artists</h3>
+        <p>View all artists from your liked songs with their ID, genres, and popularity.</p>
+    </div>
+
+    <div class="feature-card" onclick="window.location.href='/artist-mood'">
+        <h3>Artist + Mood Playlist</h3>
+        <p>Filter your liked songs by mood and a list of artists, then create a playlist.</p>
+    </div>
+
+    <div class="feature-card" onclick="window.location.href='/language-playlist'">
+        <h3>WIP Language Playlist</h3>
+        <p>Filter your liked songs by mood and language, then create a playlist.</p>
+    </div>
+</body>
+</html>

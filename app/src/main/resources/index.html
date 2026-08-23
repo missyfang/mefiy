@@ -23,7 +23,10 @@
             });
 
             if (res.ok) {
-                window.location.href = '/home';
+                const data = await res.json();
+                const tokenBody = JSON.parse(data.token);
+                localStorage.setItem('access_token', tokenBody.access_token);
+                window.location.href = '/feature';
             } else {
                 const data = await res.json();
                 status.textContent = data.message;
