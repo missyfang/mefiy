@@ -3,12 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <title>Token Generator</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+        .login {
+            text-align: center;
+        }
+        input[type="password"] {
+            padding: 8px;
+            font-size: 14px;
+            width: 260px;
+        }
+        button {
+            padding: 10px 20px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        #status { color: #555; }
+    </style>
 </head>
 <body>
-    <h2>Enter Client Secret</h2>
-    <input type="password" id="clientSecret" placeholder="Client Secret" /><br><br>
-    <button onclick="getToken()">Get Token</button>
-    <p id="status"></p>
+    <div class="login">
+        <h2>Enter Client Secret</h2>
+        <input type="password" id="clientSecret" placeholder="Client Secret" /><br><br>
+        <button onclick="getToken()">Get Token</button>
+        <p id="status"></p>
+    </div>
 
     <script>
         async function getToken() {
