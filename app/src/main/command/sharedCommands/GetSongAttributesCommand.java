@@ -31,8 +31,14 @@ public class GetSongAttributesCommand implements ICommand {
         try {
             for (List<String> batch : partition(ctx.getLikedTrackIds(), BATCH_SIZE)) {
                 String ids = String.join(",", batch);
-                String audioFeaturesBody = SpotifyApiClient.get(AUDIO_FEATURES_URL + ids, ctx.getAccessToken());
-                String tracksBody        = SpotifyApiClient.get(TRACKS_URL + ids, ctx.getAccessToken());
+                String audioFeaturesBody;
+                try {
+                    audioFeaturesBody = SpotifyApiClient.get(AUDIO_FEATURES_URL + ids, ctx.getAccessToken());
+                } catch (Exception ignored) {
+                    // audio-features may be restricted for some apps; energy/valence will default to 0.0
+                    audioFeaturesBody = "";
+                }
+                String tracksBody = SpotifyApiClient.get(TRACKS_URL + ids, ctx.getAccessToken());
                 handleResponse(audioFeaturesBody, tracksBody, batch, songs);
             }
             ctx.setSongs(songs);
