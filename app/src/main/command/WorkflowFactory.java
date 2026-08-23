@@ -5,9 +5,9 @@ import main.command.GetLikeArtistInfo.LikedArtistInfoWorkflow;
 import main.command.language.LanguagePlaylistWorkflow;
 
 // creates the right workflow based on a feature name
-public class WorkflowFactory {
+public class WorkflowFactory implements IWorkflowFactory {
 
-    public CommandWorkflow create(String feature) {
+    public ICommandWorkflow create(String feature) {
         return switch (feature) {
             case "artist-playlist" -> new ArtistPlaylistWorkflow();
             case "liked-artist-info" -> new LikedArtistInfoWorkflow();

@@ -30,13 +30,13 @@ example)
 ### SPRINT 2 Description 
 I want to build an application that integrates with the spotify api. There is a lot of things this application could do. A feature I think has been missing from spotify is a timeline playlist generator or a "Music time machine". Where the user provide a date or date range and gets back a playlist of their most played songs during that time. I think that ill be able to accomplish at least this and maybe some other features too! 
 
-### SPRINT 3 
+### SPRINT 3
 ## New FE and the template pattern
 I added a small frontend in this iteration which is a sort of login page instead of typing directly with the console. Im using JS for the frontend and using java httpserver library and the http.exchange method to respond to request to the front end instead of spinning up a whole controller. I chose to use JS instead of a java specific package since ill be able to build a more visually appealing UI with the packages that support JS than those that support java. Once I began using this library to respond to request I saw a opportunity to use the template pattern. This is because I was calling almost identical code to serve different pages with only small differences between them. So I had HtmlPageServer implment the shared logic and then had each page implement its own version of getFileName(). The use case is small right not but will hopefully grow as pages are added to the FE.
-## Using the builder pattern 
+## Using the builder pattern
 I saw building the HTTP request to a auth code and token to be an obvious use case for the builder pattern. there was an clear chaining of commands to build a single object in my original implementation. I think there are existing libraries i could have used to do this but i decided to build my own builder class. This also inspired me to build custom methods on top of the java http builder class to fit my specific use cases in other scenarios when a http request was needed.
 ## Struggles
-Im not struggling to use design patterns, but i am struggling to justify them some times since the project is so small. 
+Im not struggling to use design patterns, but i am struggling to justify them some times since the project is so small.
 ## New Feature Ideas
 I want to add a new feature "language playlist builder". I like a lot of songs in different language and wish i could filter on that language to create playlist. spotify does not let you do this but i think i can use the api to build it myself!
 
@@ -58,13 +58,58 @@ My main goal is the language playlist builder. I get a mood playlist builder out
 #### Final Sprint
 
 ## Using the proxy pattern for caching API calls
-We added caching to reduce Spotify API quota usage. 
+We added caching to reduce Spotify API quota usage.
 
 ## Using the factory pattern to create a feature workflow
-Handler methods are no longer coupled to a specific workflow implementation and just need the factory and interface.
-
+Handler methods are no longer coupled to a specific workflow implementation and just need the factory. Its not super needed since the use case is simple now, but does make the code less coupled.
 ## Struggles
-The gratest struggle this sprint was the spotify quota that they introduced. I had not hit the limit in a single session before so i was unaware it existed. it is the perfect oppotunity to use the proxy pattern tho since a cache will reduce unnecessary calls. 
+The gratest struggle this sprint was the spotify quota that they introduced. I had not hit the limit in a single session before so i was unaware it existed. it is the perfect oppotunity to use the proxy pattern tho since a cache will reduce unnecessary calls.
+
+## Unfixed bugs
+- Language feature is a work in progress
+
+## Incomplete functionality
+- Language playlist builder, bocked by paywall
+- Timeline playlist generator, blocked by limited dates range that can be fetched from spotify 
+
+---
+
+## ALL Design Pattern Classes and files 
+
+### 1. Template Method
+- `HtmlPageServer` )— `app/src/main/HtmlPageServer.java`
+  - Subclasses: `IndexPageServer`, `HomePageServer`, `FeaturePageServer`, `LikedArtistsPageServer`, `ArtistMoodPageServer`, `LanguagePlaylistPageServer` (same file)
+
+
+### 2. Builder
+- `ICodeURIBuilder` — `app/src/main/ICodeURIBuilder.java`
+- `CodeURIBuilder` — `app/src/main/CodeURIBuilder.java`
+- `HttpRequestBuilderExtensions` — `app/src/main/HttpRequestBuilderExtensions.java`
+- `TokenRequestBodyBuilder` — `app/src/main/HttpRequestBuilderExtensions.java`
+
+### 3. Command
+- `ICommand`  — `app/src/main/command/ICommand.java`
+- `CommandWorkflowInvoker`  — `app/src/main/command/CommandWorkflowInvoker.java`
+- `GetUserCommand` — `app/src/main/command/sharedCommands/GetUserCommand.java`
+- `GetLikedSongsCommand` — `app/src/main/command/sharedCommands/GetLikedSongsCommand.java`
+- `CreatePlaylistCommand` — `app/src/main/command/sharedCommands/CreatePlaylistCommand.java`
+- `AddSongsToPlaylistCommand` — `app/src/main/command/sharedCommands/AddSongsToPlaylistCommand.java`
+- `FilterSongsByArtistListCommand` — `app/src/main/command/artistPlaylist/FilterSongsByArtistListCommand.java`
+- `FilterSongsByLanguageCommand` — `app/src/main/command/language/FilterSongsByLanguageCommand.java`
+- `GetArtistInfosCommand` — `app/src/main/command/GetLikeArtistInfo/GetArtistInfosCommand.java`
+
+### 4. Strategy
+- `ILanguageDetector` — `app/src/main/command/language/ILanguageDetector.java`
+- `LinguaLanguageDetector` — `app/src/main/command/language/LinguaLanguageDetector.java`
+- `FakeLanguageDetector` — `app/test/main/command/FakeLanguageDetector.java`
+
+### 5. Proxy
+- `ISpotifyApiClient`  — `app/src/main/ISpotifyApiClient.java`
+- `SpotifyApiClient`  — `app/src/main/SpotifyApiClient.java`
+- `CachingSpotifyApiProxy` — `app/src/main/CachingSpotifyApiProxy.java`
+
+### 6. Factory
+- `WorkflowFactory` — `app/src/main/command/WorkflowFactory.java`
 
 ## Third party
 - Spotify
