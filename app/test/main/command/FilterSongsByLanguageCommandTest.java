@@ -15,7 +15,7 @@ public class FilterSongsByLanguageCommandTest {
     void execute_keepsTracksMatchingTargetLanguage() {
         LanguagePlaylistContext ctx = new LanguagePlaylistContext();
         ctx.targetLanguage = "en";
-        ctx.moodFilteredSongs = List.of(new Song("track1", 0.7, 0.8, "some english lyrics here"));
+        ctx.songs = List.of(new Song("track1", "some english lyrics here", List.of()));
 
         new FilterSongsByLanguageCommand(new FakeLanguageDetector("en")).execute(ctx);
 
@@ -27,7 +27,7 @@ public class FilterSongsByLanguageCommandTest {
     void execute_removesTracksNotMatchingTargetLanguage() {
         LanguagePlaylistContext ctx = new LanguagePlaylistContext();
         ctx.targetLanguage = "en";
-        ctx.moodFilteredSongs = List.of(new Song("track1", 0.5, 0.3, "letras en español aquí"));
+        ctx.songs = List.of(new Song("track1", "letras en español aquí", List.of()));
 
         new FilterSongsByLanguageCommand(new FakeLanguageDetector("es")).execute(ctx);
 
@@ -38,7 +38,7 @@ public class FilterSongsByLanguageCommandTest {
     void execute_skipsTracksWithNullLyrics() {
         LanguagePlaylistContext ctx = new LanguagePlaylistContext();
         ctx.targetLanguage = "en";
-        ctx.moodFilteredSongs = List.of(new Song("track1", 0.7, 0.8)); // no lyrics
+        ctx.songs = List.of(new Song("track1")); // no lyrics
 
         new FilterSongsByLanguageCommand(new FakeLanguageDetector("en")).execute(ctx);
 
@@ -49,9 +49,9 @@ public class FilterSongsByLanguageCommandTest {
     void execute_filtersCorrectlyAcrossMixedLanguages() {
         LanguagePlaylistContext ctx = new LanguagePlaylistContext();
         ctx.targetLanguage = "en";
-        ctx.moodFilteredSongs = List.of(
-                new Song("track1", 0.7, 0.8, "english lyrics"),
-                new Song("track2", 0.5, 0.3, "spanish lyrics")
+        ctx.songs = List.of(
+                new Song("track1", "english lyrics", List.of()),
+                new Song("track2", "spanish lyrics", List.of())
         );
 
         ILanguageDetector mixed = text -> text.contains("english") ? "en" : "es";
@@ -65,7 +65,7 @@ public class FilterSongsByLanguageCommandTest {
     void execute_isCaseInsensitiveForLanguageCode() {
         LanguagePlaylistContext ctx = new LanguagePlaylistContext();
         ctx.targetLanguage = "EN";
-        ctx.moodFilteredSongs = List.of(new Song("track1", 0.7, 0.8, "some english lyrics"));
+        ctx.songs = List.of(new Song("track1", "some english lyrics", List.of()));
 
         new FilterSongsByLanguageCommand(new FakeLanguageDetector("en")).execute(ctx);
 
@@ -77,7 +77,7 @@ public class FilterSongsByLanguageCommandTest {
     void execute_alwaysReturnsTrue() {
         LanguagePlaylistContext ctx = new LanguagePlaylistContext();
         ctx.targetLanguage = "en";
-        ctx.moodFilteredSongs = List.of();
+        ctx.songs = List.of();
 
         assertTrue(new FilterSongsByLanguageCommand(new FakeLanguageDetector("en")).execute(ctx));
     }

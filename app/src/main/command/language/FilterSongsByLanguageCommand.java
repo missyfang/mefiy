@@ -20,7 +20,7 @@ public class FilterSongsByLanguageCommand implements ICommand {
     public boolean execute(ICommandContext context) {
         ILanguageFilterableContext ctx = (ILanguageFilterableContext) context;
         List<Song> filtered = new ArrayList<>();
-        for (Song song : ctx.getMoodFilteredSongs()) {
+        for (Song song : ctx.getSongs()) {
             if (song.lyrics == null) continue;
             try {
                 String language = detector.detect(song.lyrics);
