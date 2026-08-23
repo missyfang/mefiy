@@ -1,5 +1,7 @@
 package main.command;
 
+import main.command.language.ILanguageDetector;
+
 // test fake — returns a fixed language code for every input
 public class FakeLanguageDetector implements ILanguageDetector {
 

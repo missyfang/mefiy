@@ -1,4 +1,4 @@
-package main.command;
+package main;
 
 public enum Mood {
     HAPPY,

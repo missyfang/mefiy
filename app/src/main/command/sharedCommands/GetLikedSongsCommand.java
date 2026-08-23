@@ -1,4 +1,10 @@
-package main.command;
+package main.command.sharedCommands;
+
+import main.command.ICommand;
+import main.command.commandContext.ISpotifyContext;
+import main.command.SpotifyApiClient;
+import main.command.SpotifyResponseParser;
+import main.command.commandContext.ICommandContext;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,7 +19,7 @@ public class GetLikedSongsCommand implements ICommand {
 
     @Override
     public boolean execute(ICommandContext context) {
-        LanguagePlaylistContext ctx = (LanguagePlaylistContext) context;
+        ISpotifyContext ctx = (ISpotifyContext) context;
 
         List<String> trackIds = new ArrayList<>();
         int offset = 0;
@@ -21,17 +27,16 @@ public class GetLikedSongsCommand implements ICommand {
 
         try {
             while (hasMore) {
-                hasMore = handleResponse(SpotifyApiClient.get(BASE_URL + offset, ctx.accessToken), trackIds);
+                hasMore = handleResponse(SpotifyApiClient.get(BASE_URL + offset, ctx.getAccessToken()), trackIds);
                 // this is gonna take forever to get all liked songs, we should cache this for all features.
                 offset += 50;
             }
-            ctx.likedTrackIds = trackIds;
+            ctx.setLikedTrackIds(trackIds);
             return true;
         } catch (Exception e) {
             return false;
         }
     }
-
 
     boolean handleResponse(String body, List<String> trackIds) {
         trackIds.addAll(SpotifyResponseParser.parseAll(body, TRACK_URI_PATTERN));

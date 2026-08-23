@@ -1,4 +1,10 @@
-package main.command;
+package main.command.sharedCommands;
+
+import main.Mood;
+import main.command.ICommand;
+import main.command.Song;
+import main.command.commandContext.IMoodFilterableContext;
+import main.command.commandContext.ICommandContext;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,14 +14,14 @@ public class FilterSongsByMoodCommand implements ICommand {
 
     @Override
     public boolean execute(ICommandContext context) {
-        LanguagePlaylistContext ctx = (LanguagePlaylistContext) context;
+        IMoodFilterableContext ctx = (IMoodFilterableContext) context;
         List<Song> filtered = new ArrayList<>();
-        for (Song song : ctx.songs) {
-            if (matchesMood(ctx.targetMood, song.valence, song.energy)) {
+        for (Song song : ctx.getSongs()) {
+            if (matchesMood(ctx.getTargetMood(), song.valence, song.energy)) {
                 filtered.add(song);
             }
         }
-        ctx.moodFilteredSongs = filtered;
+        ctx.setMoodFilteredSongs(filtered);
         return true;
     }
 

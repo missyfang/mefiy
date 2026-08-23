@@ -1,4 +1,4 @@
-package main.command;
+package main.command.language;
 
 // detects the language
 public interface ILanguageDetector {

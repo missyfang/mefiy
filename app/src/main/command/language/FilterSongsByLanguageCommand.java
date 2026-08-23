@@ -1,4 +1,8 @@
-package main.command;
+package main.command.language;
+
+import main.command.ICommand;
+import main.command.Song;
+import main.command.commandContext.ICommandContext;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,20 +18,20 @@ public class FilterSongsByLanguageCommand implements ICommand {
 
     @Override
     public boolean execute(ICommandContext context) {
-        LanguagePlaylistContext ctx = (LanguagePlaylistContext) context;
+        ILanguageFilterableContext ctx = (ILanguageFilterableContext) context;
         List<Song> filtered = new ArrayList<>();
-        for (Song song : ctx.moodFilteredSongs) {
+        for (Song song : ctx.getMoodFilteredSongs()) {
             if (song.lyrics == null) continue;
             try {
                 String language = detector.detect(song.lyrics);
-                if (ctx.targetLanguage.equalsIgnoreCase(language)) {
+                if (ctx.getTargetLanguage().equalsIgnoreCase(language)) {
                     filtered.add(song);
                 }
             } catch (Exception e) {
-              throw new Exception("failed to detect language");
+                throw new RuntimeException("failed to detect language", e);
             }
         }
-        ctx.languageFilteredSongs = filtered;
+        ctx.setLanguageFilteredSongs(filtered);
         return true;
     }
 }
