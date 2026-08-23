@@ -11,7 +11,7 @@ import java.util.regex.Pattern;
 public class GetUserCommand implements ICommand {
 
     private static final String URL = "https://api.spotify.com/v1/me";
-    static final Pattern USER_ID_PATTERN = Pattern.compile("\"id\":\"([^\"]+)\"");
+    public static final Pattern USER_ID_PATTERN = Pattern.compile("\"id\":\"([^\"]+)\"");
 
     @Override
     public boolean execute(ICommandContext context) {
@@ -23,7 +23,7 @@ public class GetUserCommand implements ICommand {
         }
     }
 
-    boolean handleResponse(String body, ISpotifyContext ctx) {
+    public boolean handleResponse(String body, ISpotifyContext ctx) {
         String userId = SpotifyResponseParser.parseFirst(body, USER_ID_PATTERN);
         if (userId == null) return false;
         ctx.setUserId(userId);

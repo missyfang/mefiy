@@ -42,7 +42,7 @@ public class GetSongAttributesCommand implements ICommand {
         }
     }
 
-    void handleResponse(String audioFeaturesBody, String tracksBody, List<String> batchIds, List<Song> songs) {
+    public void handleResponse(String audioFeaturesBody, String tracksBody, List<String> batchIds, List<Song> songs) {
         // energy/valence — Spotify preserves request order so index i maps to batchIds[i]
         List<String> energyStrs  = SpotifyResponseParser.parseAll(audioFeaturesBody, ENERGY_PATTERN);
         List<String> valenceStrs = SpotifyResponseParser.parseAll(audioFeaturesBody, VALENCE_PATTERN);

@@ -25,7 +25,7 @@ public class FilterSongsByMoodCommand implements ICommand {
         return true;
     }
 
-    static boolean matchesMood(Mood mood, double valence, double energy) {
+    public static boolean matchesMood(Mood mood, double valence, double energy) {
         return switch (mood) {
             case HAPPY     -> valence >= 0.6;
             case SAD       -> valence < 0.4;

@@ -14,8 +14,8 @@ import java.util.regex.Pattern;
 public class GetLikedSongsCommand implements ICommand {
 
     private static final String BASE_URL = "https://api.spotify.com/v1/me/tracks?limit=50&offset=";
-    static final Pattern TRACK_URI_PATTERN = Pattern.compile("\"uri\":\"spotify:track:([^\"]+)\"");
-    static final Pattern NEXT_PATTERN = Pattern.compile("\"next\":\"([^\"]+)\"");
+    public static final Pattern TRACK_URI_PATTERN = Pattern.compile("\"uri\":\"spotify:track:([^\"]+)\"");
+    public static final Pattern NEXT_PATTERN = Pattern.compile("\"next\":\"([^\"]+)\"");
 
     @Override
     public boolean execute(ICommandContext context) {
@@ -38,7 +38,7 @@ public class GetLikedSongsCommand implements ICommand {
         }
     }
 
-    boolean handleResponse(String body, List<String> trackIds) {
+    public boolean handleResponse(String body, List<String> trackIds) {
         trackIds.addAll(SpotifyResponseParser.parseAll(body, TRACK_URI_PATTERN));
         return SpotifyResponseParser.hasMatch(body, NEXT_PATTERN);
     }
