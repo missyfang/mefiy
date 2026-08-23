@@ -1,6 +1,4 @@
-package main.command;
-
-import main.HttpRequestBuilderExtensions;
+package main;
 
 import java.net.URI;
 import java.net.http.HttpClient;
@@ -19,6 +17,19 @@ public class SpotifyApiClient {
                 .build();
         HttpResponse<String> response = http.send(request, HttpResponse.BodyHandlers.ofString());
         if (response.statusCode() != 200) throw new Exception("HTTP " + response.statusCode());
+        return response.body();
+    }
+
+    public static String post(String url, String jsonBody, String token) throws Exception {
+        HttpRequest request = new HttpRequestBuilderExtensions(
+                HttpRequest.newBuilder().uri(URI.create(url)))
+                .withBearerToken(token)
+                .withContentType("application/json")
+                .withPost(HttpRequest.BodyPublishers.ofString(jsonBody))
+                .build();
+        HttpResponse<String> response = http.send(request, HttpResponse.BodyHandlers.ofString());
+        if (response.statusCode() != 200 && response.statusCode() != 201)
+            throw new Exception("HTTP " + response.statusCode());
         return response.body();
     }
 }

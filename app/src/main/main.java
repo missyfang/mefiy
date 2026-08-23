@@ -24,6 +24,7 @@ public class main {
         // configure EPs
         server.createContext("/token", new FetchToken(config)::handle);
         server.createContext("/api/liked-artists", new FetchLikedArtists()::handle);
+        server.createContext("/api/artist-playlist", new FetchArtistPlaylist()::handle);
 
         server.setExecutor(Executors.newCachedThreadPool());
 

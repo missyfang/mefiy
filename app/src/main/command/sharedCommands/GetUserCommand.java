@@ -2,8 +2,8 @@ package main.command.sharedCommands;
 
 import main.command.ICommand;
 import main.command.commandContext.ISpotifyContext;
-import main.command.SpotifyApiClient;
-import main.command.SpotifyResponseParser;
+import main.SpotifyApiClient;
+import main.SpotifyResponseParser;
 import main.command.commandContext.ICommandContext;
 
 import java.util.regex.Pattern;

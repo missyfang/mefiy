@@ -1,5 +1,6 @@
 package main.command;
 
+import main.SpotifyResponseParser;
 import main.command.sharedCommands.GetLikedSongsCommand;
 import main.command.sharedCommands.GetUserCommand;
 import org.junit.jupiter.api.Test;

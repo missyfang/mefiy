@@ -12,6 +12,7 @@
         th, td { text-align: left; padding: 8px 12px; border-bottom: 1px solid #eee; }
         th { background: #f9f9f9; font-weight: 600; }
         button { padding: 10px 20px; cursor: pointer; font-size: 14px; }
+        h3 { margin-top: 32px; }
     </style>
 </head>
 <body>
@@ -36,7 +37,7 @@
             const status = document.getElementById('status');
             const results = document.getElementById('results');
 
-            status.textContent = 'Fetching liked song artists...';
+            status.textContent = 'Fetching...';
             results.innerHTML = '';
 
             const res = await fetch('/api/liked-artists', {
@@ -50,18 +51,15 @@
                 return;
             }
 
-            status.textContent = 'Found ' + data.artists.length + ' artists.';
-
-            let html = '<table><tr><th>Name</th><th>ID</th><th>Genres</th><th>Popularity</th></tr>';
+            let html = '<table><tr><th>Name</th><th>ID</th></tr>';
             for (const a of data.artists) {
                 html += '<tr>';
                 html += '<td>' + escapeHtml(a.name) + '</td>';
                 html += '<td>' + escapeHtml(a.id) + '</td>';
-                html += '<td>' + escapeHtml(a.genres.join(', ')) + '</td>';
-                html += '<td>' + a.popularity + '</td>';
                 html += '</tr>';
             }
             html += '</table>';
+
             results.innerHTML = html;
         }
 

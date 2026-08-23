@@ -1,7 +1,7 @@
 package main;
 
 import com.sun.net.httpserver.HttpExchange;
-import main.command.Artist;
+import main.models.Artist;
 import main.command.GetLikeArtistInfo.LikedArtistInfoContext;
 import main.command.GetLikeArtistInfo.LikedArtistInfoWorkflow;
 
@@ -42,14 +42,7 @@ public class FetchLikedArtists {
             Artist a = ctx.getArtists().get(i);
             if (i > 0) sb.append(",");
             sb.append("{\"id\":\"").append(escape(a.id)).append("\"");
-            sb.append(",\"name\":\"").append(escape(a.name)).append("\"");
-            sb.append(",\"popularity\":").append(a.popularity);
-            sb.append(",\"genres\":[");
-            for (int j = 0; j < a.genres.size(); j++) {
-                if (j > 0) sb.append(",");
-                sb.append("\"").append(escape(a.genres.get(j))).append("\"");
-            }
-            sb.append("]}");
+            sb.append(",\"name\":\"").append(escape(a.name)).append("\"}");
         }
         sb.append("]}");
         return sb.toString();

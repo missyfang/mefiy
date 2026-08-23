@@ -3,6 +3,7 @@ package main.command;
 import main.command.language.FilterSongsByLanguageCommand;
 import main.command.language.LanguagePlaylistContext;
 import main.command.language.ILanguageDetector;
+import main.models.Song;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;

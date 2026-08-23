@@ -1,7 +1,7 @@
 package main.command.language;
 
 import main.command.ICommand;
-import main.command.Song;
+import main.models.Song;
 import main.command.commandContext.ICommandContext;
 
 import java.util.ArrayList;

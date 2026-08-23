@@ -1,7 +1,7 @@
 package main.command.GetLikeArtistInfo;
 
-import main.command.Artist;
-import main.command.Song;
+import main.models.Artist;
+import main.models.Song;
 import main.command.commandContext.ISpotifyContext;
 
 import java.util.ArrayList;

@@ -1,6 +1,6 @@
 package main.command.commandContext;
 
-import main.command.Song;
+import main.models.Song;
 
 import java.util.List;
 
